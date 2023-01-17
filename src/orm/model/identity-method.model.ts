@@ -3,8 +3,8 @@ import { IdentityMethodEntity, IdentityProvider } from '../../auth/entities/iden
 import { BaseModel } from '../base.model';
 
 export class IdentityMethodModel extends BaseModel implements IdentityMethodEntity {
-  @Column({ type: 'uuid' })
-  userId: string;
+  @Column({ type: Number })
+  userId: number;
 
   @Column({ type: String, enum: IdentityProvider })
   provider: IdentityProvider;

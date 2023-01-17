@@ -3,9 +3,9 @@ export enum IdentityProvider {
 }
 
 export class IdentityMethodEntity {
-  id: string;
+  id: number;
 
-  userId: string;
+  userId: number;
 
   provider: IdentityProvider;
 

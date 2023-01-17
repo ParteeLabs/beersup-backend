@@ -15,7 +15,7 @@ export enum UserGroup {
  * Keycloak user info.
  */
 export class UserEntity {
-  id: string;
+  id: number;
 
   email?: string;
 

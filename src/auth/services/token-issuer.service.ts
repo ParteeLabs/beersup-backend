@@ -21,9 +21,6 @@ export interface AccessTokenConfig {
   identityMethodId: string;
 }
 
-/**
- * Reset password config for issuer service.
- */
 export interface GrantAccessTokenOptions {
   actorId: string;
   identityMethodId: string;

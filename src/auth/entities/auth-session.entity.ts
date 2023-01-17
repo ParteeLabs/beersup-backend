@@ -1,24 +1,12 @@
-/**
- * Declare auth session entity.
- */
 export class AuthSessionEntity {
-  /**
-   * Declare that the session was authorized for a party.
-   */
   authorizedPartyId: string;
 
-  /**
-   * Declare actor that authorized this session.
-   */
-  actorId: string;
-
-  /**
-   * Declare date/
-   */
+  actorId: number;
 
   expiryDate: Date;
+
   /**
-   * Checksum hash.
+   * Checksum hash of authorizedPartyId + actorId + expiryDate
    */
   checksum: string;
 }

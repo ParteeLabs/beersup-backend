@@ -27,7 +27,7 @@ class ExceptionResponseBuilder {
 
   constructor(host: ArgumentsHost) {
     /**
-     * @dev Extracting contexts.
+     * Extracting contexts.
      */
     this.type = host.getType();
     switch (this.type) {
@@ -73,14 +73,14 @@ class ExceptionResponseBuilder {
    */
   public detectException(exception: any): ExceptionResponseBuilder {
     /**
-     * @dev Handle Axios exception.
+     * Handle Axios exception.
      */
     if ((exception as AxiosError).isAxiosError) {
       return this.fromAxiosError(exception as AxiosError);
     }
 
     /**
-     * @dev Handle other errors.
+     * Handle other errors.
      */
     return this.fromOthers(exception);
   }
@@ -103,7 +103,7 @@ class ExceptionResponseBuilder {
 }
 
 /**
- * @dev Handle exception filter and builder.
+ * Handle exception filter and builder.
  */
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -111,12 +111,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
 
     /**
-     * @dev response builder
+     * response builder
      */
     const error = new ExceptionResponseBuilder(host).detectException(exception);
 
     /**
-     * @dev Return response
+     * Return response
      */
     const response = ctx.getResponse<FastifyReply>();
     response.status(+error.statusCode).send(error.getResponseMessage());

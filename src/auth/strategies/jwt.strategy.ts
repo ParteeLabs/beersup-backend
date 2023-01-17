@@ -52,11 +52,6 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  /**
-   * Validate jwt session. Sub method.
-   * @param jwtPayload
-   * @private
-   */
   private async validateJwtSession(jwtPayload: JWTPayload): Promise<JwtAuthSession> {
     /**
      * Make sure the jwt id matched with a session id.
@@ -92,7 +87,8 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     }
 
     /**
-     * Then we can successfully validate the session.
+     * Returns session, user, jwt payload.
+     * Will be request.user as passport default
      */
     return { session, user, jwtPayload };
   }

@@ -3,7 +3,7 @@ import { EntityManager, Repository } from 'typeorm';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 
 /**
- * @dev AuthSessionService handles all session related logic.
+ * AuthSessionService handles all session related logic.
  */
 export class AuthSessionService {
   constructor(

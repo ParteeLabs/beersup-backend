@@ -13,9 +13,9 @@ export class AuthSessionModel extends BaseModel implements AuthSessionEntity {
   /**
    * userId
    */
-  @Column({ type: String })
+  @Column({ type: Number })
   @Index('actorId_idx')
-  readonly actorId: string;
+  readonly actorId: number;
 
   @Column({ type: String })
   @Index('authorizedPartyId_idx')
