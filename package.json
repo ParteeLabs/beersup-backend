@@ -22,7 +22,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "cucumber-js",
+    "test:e2e:release": "cucumber-js -p release"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -31,6 +32,7 @@
     "@nestjs/jwt": "^10.0.1",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-fastify": "^9.2.1",
     "@nestjs/swagger": "^6.1.4",
     "@nestjs/typeorm": "^9.0.1",
     "aes-js": "^3.1.2",
@@ -50,9 +52,11 @@
     "typeorm": "^0.3.11"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^8.10.0",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
+    "@solana/web3.js": "^1.73.0",
     "@types/aes-js": "^3.1.1",
     "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
@@ -63,6 +67,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "chai": "^4.3.7",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",

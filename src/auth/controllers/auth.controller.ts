@@ -15,7 +15,6 @@ import { CommonApiResponse, CommonResponse } from '../../api-docs/api-response.d
 import { AuthChallengeEntity } from '../entities/auth-challenge.entity';
 import { AuthChallengeDto } from '../dto/auth-challenge.dto';
 import { AuthChallengeService } from '../services/auth-challenge.service';
-import { AuthChallengeModel } from '../../orm/model/auth-challenge.model';
 import { JwtAuthSession } from '../strategies/jwt.strategy';
 import { AuthSessionService } from '../services/auth-session.service';
 import { CurrentSession } from '../decorators/current-session.decorator';
@@ -37,14 +36,35 @@ export class AuthController {
     private readonly solanaAuthService: SolanaAuthService,
   ) {}
 
+  @CommonApiResponse(
+    CommonResponse.UNAUTHORIZED_SESSION,
+    CommonResponse.FORBIDDEN_SESSION,
+    CommonResponse.WRONG_FIELD_FORMATS,
+  )
+  @HttpCode(HttpStatus.CREATED)
   @Post('/signin')
   public async signin(@Param('type') type: string, body: any): Promise<TokenSetEntity> {
     switch (LoginTypeParamMap[type]) {
+      /**
+       * Login by Solana wallet
+       */
       case LoginType.SOLANA: {
+        /**
+         * Validate the body
+         */
         const loginDto = plainToInstance(SolanaLoginDto, body);
-        validateSync(loginDto);
+        const errors = validateSync(loginDto);
+        if (errors.length > 0) {
+          throw errors;
+        }
+        /**
+         * Perform Solana login
+         */
         return this.solanaAuthService.signIn(loginDto);
       }
+      /**
+       * Unsupported other login methods
+       */
       default:
         throw new NotImplementedException(`This login type: "${type}" is not supported`);
     }
@@ -73,7 +93,7 @@ export class AuthController {
   })
   @HttpCode(HttpStatus.CREATED)
   @Post('/challenge/request')
-  public async requestAuthChallenge(@Body() body: AuthChallengeDto): Promise<AuthChallengeModel> {
+  public async requestAuthChallenge(@Body() body: AuthChallengeDto): Promise<AuthChallengeEntity> {
     return this.authChallengeService.generateAuthChallenge(body.target);
   }
 }

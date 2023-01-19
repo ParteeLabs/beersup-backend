@@ -5,6 +5,7 @@ import { DateTime, Duration } from 'luxon';
 
 import { TokenSetEntity } from '../entities/token-set.entity';
 import { AuthSessionModel } from '../../orm/model/auth-session.model';
+import { SystemId } from '../../core/primitive.core';
 
 import { JWTPayload, JwtProvider } from '../../providers/hash/jwt.provider';
 import { RegistryProvider } from '../../providers/registry.provider';
@@ -15,15 +16,15 @@ import { BCryptHashProvider } from '../../providers/hash/hashing.provider';
  */
 export interface AccessTokenConfig {
   requestedResource: string;
-  actorId: string;
+  actorId: SystemId;
   authorizedPartyId: string;
   expiresIn: number; // milliseconds
-  identityMethodId: string;
+  identityMethodId: number;
 }
 
 export interface GrantAccessTokenOptions {
-  actorId: string;
-  identityMethodId: string;
+  actorId: SystemId;
+  identityMethodId: number;
   expiresIn?: Duration;
 }
 
@@ -76,7 +77,7 @@ export class TokenIssuerService {
       /**
        * Fields to be verified
        */
-      jti: session.id,
+      jti: session.uid,
       sid: session.id,
       sub: checksum,
       azp: config.authorizedPartyId,

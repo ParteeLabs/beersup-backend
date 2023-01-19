@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import TwS from 'tweetnacl';
+import Nacl from 'tweetnacl';
 import * as Bs from 'bs58';
 
 type SolanaSignatureData = {
@@ -10,7 +10,7 @@ type SolanaSignatureData = {
 
 export class SolanaIdentityProvider {
   verifySignature({ rawMessage, signature, walletAddress }: SolanaSignatureData): boolean {
-    return TwS.sign.detached.verify(
+    return Nacl.sign.detached.verify(
       new TextEncoder().encode(rawMessage), // UTF-8
       Bs.decode(signature), // Base58
       Bs.decode(walletAddress), // Base58

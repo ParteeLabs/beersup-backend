@@ -6,21 +6,13 @@ import { RegistryProvider } from '../providers/registry.provider';
 
 const registry = new RegistryProvider();
 
-export function getDataSourceConfig(registry: RegistryProvider) {
-  const engine = registry.getConfig().DB_ENGINE;
-  switch (engine) {
-    case 'sqlite':
-      return {
-        type: 'sqlite' as any,
-        database: registry.getConfig().DB_URL,
-      };
+export function getDataSourceConfig(registry: RegistryProvider): Partial<DataSourceOptions> {
+  const { DB_ENGINE, DB_URL } = registry.getConfig();
 
-    default:
-      return {
-        type: engine,
-        url: registry.getConfig().DB_URL,
-      };
-  }
+  return {
+    type: DB_ENGINE,
+    url: DB_URL,
+  };
 }
 
 /**

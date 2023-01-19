@@ -23,7 +23,7 @@ export class AuthChallengeService {
     });
   }
 
-  public async resolveAuthChallenge(authChallengeId: string) {
+  public async resolveAuthChallenge(authChallengeId: number) {
     const { affected } = await this.AuthChallengeRepo.update({ id: authChallengeId }, { isResolved: true });
     if (affected == 0) {
       throw new NotFoundException('Auth challenge not found');

@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
+import { HealthModule } from './health/health.module';
 import { getDataSourceConfig } from './orm/type-orm.config';
 import { RegistryProvider } from './providers/registry.provider';
 
 @Module({
   imports: [
+    HealthModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRootAsync({
       useFactory: async () => {

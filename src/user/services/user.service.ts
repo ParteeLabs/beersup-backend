@@ -18,7 +18,7 @@ export class UserService {
     return this.userRepo.save(createUserDto);
   }
 
-  public async updateUserProfile(id: string, updateUserDto: UpdateUserDto) {
+  public async updateUserProfile(id: number, updateUserDto: UpdateUserDto) {
     if (updateUserDto.email) {
       const isTaken = await this.userRepo.exist({
         where: { email: updateUserDto.email, id: Not(id) },

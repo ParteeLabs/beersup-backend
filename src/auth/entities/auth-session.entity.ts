@@ -1,7 +1,13 @@
+import { SystemId } from '../../core/primitive.core';
+
 export class AuthSessionEntity {
+  id: number;
+
+  uid: string;
+
   authorizedPartyId: string;
 
-  actorId: number;
+  actorId: SystemId;
 
   expiryDate: Date;
 

@@ -1,6 +1,6 @@
 import { Global } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { IsBoolean, IsIn, IsNotEmpty, IsPort, IsString, IsUrl, validateSync } from 'class-validator';
+import { IsIn, IsNotEmpty, IsString, IsUrl, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import * as fs from 'fs';
 import { DatabaseType } from 'typeorm';
@@ -14,12 +14,6 @@ export class SystemConfig {
   NODE_ENV;
 
   /**
-   * the version of current runner
-   */
-  @IsString()
-  API_VERSION: string;
-
-  /**
    * @description PORT and HOST config
    */
   @IsUrl({
@@ -30,9 +24,8 @@ export class SystemConfig {
   /**
    * @description Port config
    */
-  @IsPort()
   @IsNotEmpty()
-  PORT: string;
+  PORT: number;
 
   /**
    * @description Declare private key

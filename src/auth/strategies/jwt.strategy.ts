@@ -56,7 +56,7 @@ export class JwtAuthStrategy extends PassportStrategy(Strategy) {
     /**
      * Make sure the jwt id matched with a session id.
      */
-    const session = await this.authSessionService.findAuthSessionById(jwtPayload.sid as string);
+    const session = await this.authSessionService.findAuthSessionById(jwtPayload.sid as number);
     if (!session) throw new UnauthorizedException();
 
     /**

@@ -1,4 +1,4 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Generated, Index } from 'typeorm';
 import { AuthSessionEntity } from '../../auth/entities/auth-session.entity';
 
 import { BaseModel } from '../base.model';
@@ -10,6 +10,10 @@ import { BaseModel } from '../base.model';
   name: 'auth_session',
 })
 export class AuthSessionModel extends BaseModel implements AuthSessionEntity {
+  @Column({ type: 'uuid' })
+  @Generated('uuid')
+  uid: string;
+
   /**
    * userId
    */

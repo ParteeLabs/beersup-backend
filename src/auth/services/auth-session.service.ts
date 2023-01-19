@@ -12,17 +12,17 @@ export class AuthSessionService {
     private readonly AuthSessionRepo: Repository<AuthSessionModel>,
   ) {}
 
-  public async findAuthSessionById(id: string): Promise<AuthSessionModel> {
+  public async findAuthSessionById(id: number): Promise<AuthSessionModel> {
     return this.AuthSessionRepo.findOne({ where: { id } });
   }
 
-  public async endSession(userId: string, sessionId: string): Promise<void> {
+  public async endSession(userId: number, sessionId: number): Promise<void> {
     await this.entityManager.transaction(async (em) => {
       await em.delete(AuthSessionModel, { id: sessionId, actorId: userId });
     });
   }
 
-  public async deleteAllSessions(userId: string): Promise<void> {
+  public async deleteAllSessions(userId: number): Promise<void> {
     await this.entityManager.transaction(async (em) => {
       await em.delete(AuthSessionModel, { actorId: userId });
     });
