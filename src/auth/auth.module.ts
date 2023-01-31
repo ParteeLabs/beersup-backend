@@ -1,27 +1,26 @@
 import { Module } from '@nestjs/common';
 import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
 
-/**
- * Import infra providers.
- */
+/** Import providers */
 import { AuthController } from './controllers/auth.controller';
 import { JwtProvider } from '../providers/hash/jwt.provider';
-import { OrmModule } from '../orm/orm.module';
-
-/**
- * Import logic providers.
- */
-import { UserService } from '../user/services/user.service';
-import { TokenIssuerService } from './services/token-issuer.service';
+import { SolanaIdentityProvider } from '../providers/solana-identity.provider';
 import { BCryptHashProvider } from '../providers/hash/hashing.provider';
-import { JwtAuthStrategy } from './strategies/jwt.strategy';
 import { RegistryProvider } from '../providers/registry.provider';
-import { AuthChallengeService } from './services/auth-challenge.service';
-import { AuthSessionService } from './services/auth-session.service';
 import { AvatarProvider } from '../providers/avatar.provider';
 
+/** Import modules */
+import { OrmModule } from '../orm/orm.module';
+
+/** Import services */
+import { JwtAuthStrategy } from './strategies/jwt.strategy';
+import { UserService } from '../user/services/user.service';
+import { TokenIssuerService } from './services/token-issuer.service';
+import { AuthChallengeService } from './services/auth-challenge.service';
+import { AuthSessionService } from './services/auth-session.service';
+import { SolanaAuthService } from './services/solana-auth.service';
+
 @Module({
-  controllers: [AuthController],
   imports: [
     /**
      * import ORM modules so that we can use models.
@@ -59,25 +58,26 @@ import { AvatarProvider } from '../providers/avatar.provider';
   ],
   providers: [
     /**
-     * Import services
-     */
-    TokenIssuerService,
-    UserService,
-    AuthChallengeService,
-    AuthSessionService,
-
-    /**
      * Import providers.
      */
     RegistryProvider,
     JwtProvider,
     BCryptHashProvider,
     AvatarProvider,
-
+    SolanaIdentityProvider,
     /**
      * Import strategy
      */
     JwtAuthStrategy,
+    /**
+     * Import services
+     */
+    TokenIssuerService,
+    UserService,
+    AuthChallengeService,
+    AuthSessionService,
+    SolanaAuthService,
   ],
+  controllers: [AuthController],
 })
 export class AuthModule {}

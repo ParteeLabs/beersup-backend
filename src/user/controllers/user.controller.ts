@@ -9,9 +9,9 @@ import { CurrentSession } from '../../auth/decorators/current-session.decorator'
 import { CommonApiResponse, CommonResponse } from '../../api-docs/api-response.decorator';
 import { JwtAuthSession } from '../../auth/strategies/jwt.strategy';
 
+@Controller({ path: 'user', version: '1' })
 @ApiTags('user')
 @ApiBearerAuth('jwt')
-@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

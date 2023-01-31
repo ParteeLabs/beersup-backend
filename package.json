@@ -26,6 +26,7 @@
     "test:e2e:release": "cucumber-js -p release"
   },
   "dependencies": {
+    "@fastify/static": "^6.8.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
@@ -44,6 +45,7 @@
     "fastify": "^4.11.0",
     "jose": "^4.11.2",
     "luxon": "^3.2.1",
+    "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",

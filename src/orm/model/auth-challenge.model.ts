@@ -5,12 +5,7 @@ import { AuthChallengeEntity, MEMO_TEXT } from '../../auth/entities/auth-challen
 import { Column, Entity, Index } from 'typeorm';
 import { BaseModel } from '../base.model';
 
-/**
- * Define the AuthChallengeModel
- */
-@Entity({
-  name: 'auth_challenge',
-})
+@Entity({ name: 'auth_challenge' })
 @Index('target_createdAt_idx', ['target', 'createdAt'])
 export class AuthChallengeModel extends BaseModel implements AuthChallengeEntity {
   @Column({ type: String })

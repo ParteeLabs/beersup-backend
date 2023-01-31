@@ -2,9 +2,7 @@ import { Column, Entity } from 'typeorm';
 import { Role, UserEntity, UserGroup } from '../../user/entities/user.entity';
 import { BaseModel } from '../base.model';
 
-@Entity({
-  name: 'user',
-})
+@Entity({ name: 'user' })
 export class UserModel extends BaseModel implements UserEntity {
   @Column({ type: String, nullable: true })
   email?: string;

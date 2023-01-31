@@ -1,5 +1,5 @@
-import request from 'supertest';
+import * as request from 'supertest';
 
 export function getBeersupBEClient() {
-  return request('https://' + process.env.BEERSUP_BE);
+  return request(process.env.BEERSUP_BE);
 }

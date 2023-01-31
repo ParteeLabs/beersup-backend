@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import Nacl from 'tweetnacl';
+import * as Nacl from 'tweetnacl';
 import * as Bs from 'bs58';
 
 type SolanaSignatureData = {

@@ -5,8 +5,8 @@ import {
   HttpCode,
   HttpStatus,
   NotImplementedException,
-  Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -21,14 +21,12 @@ import { CurrentSession } from '../decorators/current-session.decorator';
 import { LoginType, LoginTypeParamMap } from '../auth.config';
 import { SolanaAuthService } from '../services/solana-auth.service';
 import { TokenSetEntity } from '../entities/token-set.entity';
-import { validateSync } from 'class-validator';
+import { validateOrReject } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { SolanaLoginDto } from '../dto/solana-login.dto';
 
-@Controller('auth')
+@Controller({ path: 'auth', version: '1' })
 @ApiTags('auth')
-@ApiBearerAuth('jwt')
-@UseGuards(AuthGuard('jwt'))
 export class AuthController {
   constructor(
     private readonly sessionService: AuthSessionService,
@@ -43,28 +41,15 @@ export class AuthController {
   )
   @HttpCode(HttpStatus.CREATED)
   @Post('/signin')
-  public async signin(@Param('type') type: string, body: any): Promise<TokenSetEntity> {
+  public async signin(@Query('type') type: string, @Body() body: any): Promise<TokenSetEntity> {
     switch (LoginTypeParamMap[type]) {
-      /**
-       * Login by Solana wallet
-       */
+      /** Login by Solana wallet */
       case LoginType.SOLANA: {
-        /**
-         * Validate the body
-         */
         const loginDto = plainToInstance(SolanaLoginDto, body);
-        const errors = validateSync(loginDto);
-        if (errors.length > 0) {
-          throw errors;
-        }
-        /**
-         * Perform Solana login
-         */
+        await validateOrReject(loginDto);
         return this.solanaAuthService.signIn(loginDto);
       }
-      /**
-       * Unsupported other login methods
-       */
+      /** Unsupported other login methods */
       default:
         throw new NotImplementedException(`This login type: "${type}" is not supported`);
     }
@@ -80,6 +65,8 @@ export class AuthController {
     description: 'Logout from all sessions.',
   })
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth('jwt')
+  @UseGuards(AuthGuard('jwt'))
   @Post('/logout')
   public async logOutFromAllSessions(@CurrentSession() { user }: JwtAuthSession): Promise<void> {
     return this.sessionService.deleteAllSessions(user.id);

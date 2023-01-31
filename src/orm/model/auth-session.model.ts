@@ -3,19 +3,14 @@ import { AuthSessionEntity } from '../../auth/entities/auth-session.entity';
 
 import { BaseModel } from '../base.model';
 
-/**
- * Define model.
- */
-@Entity({
-  name: 'auth_session',
-})
+@Entity({ name: 'auth_session' })
 export class AuthSessionModel extends BaseModel implements AuthSessionEntity {
   @Column({ type: 'uuid' })
   @Generated('uuid')
   uid: string;
 
   /**
-   * userId
+   * a.k.a userId
    */
   @Column({ type: Number })
   @Index('actorId_idx')

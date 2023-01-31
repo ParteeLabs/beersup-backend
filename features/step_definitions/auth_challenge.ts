@@ -5,6 +5,9 @@ import { AuthChallengeEntity } from '../../src/auth/entities/auth-challenge.enti
 
 When('request auth challenge', async function () {
   const state = getState(this);
+  /** use wallet address as a auth challenge target */
+  state.authChallengeTarget = state.solanaValidKeyPair.publicKey.toString();
+
   const response = await getBeersupBEClient()
     .post('/v1/auth/challenge/request')
     .set('Accept', 'application/json')
@@ -14,6 +17,7 @@ When('request auth challenge', async function () {
   state.response = response;
 
   if (state.response.status == 201) {
-    state.authChallengeId = (response.body as AuthChallengeEntity).id;
+    const { id } = state.response.body as AuthChallengeEntity;
+    state.authChallengeId = id;
   }
 });

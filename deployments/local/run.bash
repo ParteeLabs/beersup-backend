@@ -51,6 +51,7 @@ readonly FLAG_RAW
 export DOCKER_BUILDKIT=0
 
 function start_cluster() {
+  docker compose -f $COMPOSE_FILE --project-directory $PWD build
   docker compose -f $COMPOSE_FILE --project-directory $PWD up --detach --timeout 600
   echo "Finish deployment for Local"
   docker compose -f $COMPOSE_FILE ps
